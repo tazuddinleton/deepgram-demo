@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 class Program
 {
     private static string DeepgramApiKey;
+    private static string AudioFilePath;
     private const string ApiUrl = "https://api.deepgram.com/v1/listen";
 
     static async Task Main(string[] args)
@@ -16,6 +17,7 @@ class Program
         // Load configuration
         var config = LoadConfiguration();
         DeepgramApiKey = config["Deepgram:ApiKey"];
+        AudioFilePath = config["Input:AudioFilePath"];
 
         if (string.IsNullOrEmpty(DeepgramApiKey))
         {
@@ -23,9 +25,8 @@ class Program
             return;
         }
 
-        string audioFilePath = "C:\\Users\\Taz Uddin\\RiderProjects\\DeepGramSample\\DeepGramSample\\Input\\145180__crashoverride6__female-news-report-of-laramie-1.mp3"; // Replace with your audio file path
 
-        if (!File.Exists(audioFilePath))
+        if (!File.Exists(AudioFilePath))
         {
             Console.WriteLine("Audio file not found!");
             return;
@@ -33,7 +34,7 @@ class Program
 
         try
         {
-            string transcription = await TranscribeAudioAsync(audioFilePath);
+            string transcription = await TranscribeAudioAsync(AudioFilePath);
             Console.WriteLine("Transcription:");
             Console.WriteLine(transcription);
         }
