@@ -31,9 +31,6 @@ cd deepgram-demo\DeepGramSample
 {
     "Deepgram": {
         "ApiKey": "YOUR_DEEPGRAM_API_KEY"
-    },
-    "Input": {
-      "AudioFile": "PAHT_TO_YOUR_AUDIO_FILE"      
     }
 } 
 ```
