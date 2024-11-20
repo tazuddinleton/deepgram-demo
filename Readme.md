@@ -43,3 +43,14 @@ cd deepgram-demo\DeepGramSample
 
 `dotnet run`
 
+### 4. Usage 
+
+```-d <input-directory> -o <output-directory> [-f <specific-file>]
+Options:
+-d  Specifies the input directory containing audio files.
+-o  Specifies the output directory to save transcriptions.
+-f  (Optional) Specifies a specific file to transcribe.
+```
+### 5. Sample command:
+`DeepGramSample.exe -d "<input directory>" -o "<output directory>" -f <specific file name>`
+
