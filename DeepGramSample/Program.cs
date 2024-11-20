@@ -116,6 +116,10 @@ class Program
         Console.WriteLine("  -f  (Optional) Specifies a specific file to transcribe.");
     }
 
+    private static string GetCustomVocabulary()
+    {
+        return Uri.EscapeDataString("Apoquel:1,Bordetella:1,Leptospirosis:1,Distemper Parvo Combo:1,Heartworm:1,Bravecto:1,AppleQuil:-1");
+    }
     static async Task ProcessFile(string inputFilePath, string outputDirectory)
     {
         try
@@ -176,7 +180,7 @@ class Program
         content.Headers.ContentType = new MediaTypeHeaderValue("audio/mp3");
 
         // Add any additional query parameters (e.g., language, punctuate)
-        string requestUrl = $"{ApiUrl}?language=en&punctuate=true";
+        string requestUrl = $"{ApiUrl}?language=en&punctuate=true&keywords={GetCustomVocabulary()}";
 
         // Send POST request to Deepgram API
         HttpResponseMessage response = await client.PostAsync(requestUrl, content);
