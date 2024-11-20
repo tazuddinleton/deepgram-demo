@@ -89,7 +89,7 @@ class Program
         {
             Console.WriteLine($"Processing all files in directory: {inputDirectory}");
             var files = Directory.GetFiles(inputDirectory, "*.*")
-                .Where(f => f.EndsWith(".mp3") || f.EndsWith(".wav"))
+                .Where(f => f.EndsWith(".mp3") || f.EndsWith(".wav") || f.EndsWith(".m4a"))
                 .ToArray();
 
             if (files.Length == 0)
@@ -192,29 +192,51 @@ class Program
 
         // Parse and return the transcription
         string responseContent = await response.Content.ReadAsStringAsync();
-        var result = JsonConvert.DeserializeObject<DeepgramResponse>(responseContent);
+        var settings = new JsonSerializerSettings
+        {
+            MissingMemberHandling = MissingMemberHandling.Ignore
+        };
+
+        var result = JsonConvert.DeserializeObject<DeepgramResponse>(responseContent, settings);
 
         return result?.Results?.Channels?[0]?.Alternatives?[0]?.Transcript ?? "No transcription available.";
     }
 
     // Classes to parse JSON response
+  
     public class DeepgramResponse
     {
+        [JsonConstructor]
+        public DeepgramResponse() {}
+
+        [JsonProperty("results")]
         public DeepgramResults Results { get; set; }
     }
 
     public class DeepgramResults
     {
+        [JsonConstructor]
+        public DeepgramResults() {}
+
+        [JsonProperty("channels")]
         public DeepgramChannel[] Channels { get; set; }
     }
 
     public class DeepgramChannel
     {
+        [JsonConstructor]
+        public DeepgramChannel() {}
+
+        [JsonProperty("alternatives")]
         public DeepgramAlternative[] Alternatives { get; set; }
     }
 
     public class DeepgramAlternative
     {
+        [JsonConstructor]
+        public DeepgramAlternative() {}
+
+        [JsonProperty("transcript")]
         public string Transcript { get; set; }
     }
 }
